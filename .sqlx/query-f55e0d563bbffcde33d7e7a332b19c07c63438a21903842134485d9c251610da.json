@@ -1,0 +1,58 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT oi.id, oi.book_id, oi.quantity, oi.unit_price,\n               b.title, b.author, b.cover_emoji\n        FROM order_items oi\n        JOIN books b ON b.id = oi.book_id\n        WHERE oi.order_id = $1\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "book_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "quantity",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 3,
+        "name": "unit_price",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 4,
+        "name": "title",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 5,
+        "name": "author",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 6,
+        "name": "cover_emoji",
+        "type_info": "Varchar"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "f55e0d563bbffcde33d7e7a332b19c07c63438a21903842134485d9c251610da"
+}
