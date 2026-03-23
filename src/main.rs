@@ -51,13 +51,18 @@ let pool = PgPoolOptions::new()
 
     let state = AppState { pool };
 
-    // CORS — allow frontend dev server and production origin
-   let frontend_origin = env::var("FRONTEND_URL")
-    .unwrap_or_else(|_| "http://localhost:5173".into());
-
 let cors = CorsLayer::new()
-    .allow_origin(frontend_origin.parse::<HeaderValue>().unwrap())
-    .allow_methods([Method::GET, Method::POST, Method::PATCH, Method::DELETE, Method::OPTIONS])
+    .allow_origin([
+        "https://readdeck-app.vercel.app".parse::<HeaderValue>().unwrap(),
+        "http://localhost:5173".parse::<HeaderValue>().unwrap(),
+    ])
+    .allow_methods([
+        Method::GET,
+        Method::POST,
+        Method::PATCH,
+        Method::DELETE,
+        Method::OPTIONS,
+    ])
     .allow_headers([
         header::CONTENT_TYPE,
         header::AUTHORIZATION,
@@ -88,8 +93,8 @@ let cors = CorsLayer::new()
         )
 
         .with_state(state)
-        .layer(CookieManagerLayer::new())
         .layer(cors)
+        .layer(CookieManagerLayer::new())
         .layer(CompressionLayer::new())
         .layer(TraceLayer::new_for_http());
 
